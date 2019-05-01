@@ -9,7 +9,6 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 /**ALEX ARIEL CHOQUE CLEMENTE*/
-/*Este programa solo es una prueba*/
 public class Principal extends Application{
 	
 	public void start(Stage arg){
