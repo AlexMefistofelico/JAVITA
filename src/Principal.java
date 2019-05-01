@@ -2,19 +2,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.swing.JOptionPane;
+
 import javafx.application.Application;
 import javafx.scene.control.ChoiceDialog;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 /**ALEX ARIEL CHOQUE CLEMENTE*/
-/** Jhoselin te amo mi amor*/
+/*Este programa solo es una prueba*/
 public class Principal extends Application{
 	
 	public void start(Stage arg){
 	
 		try{
 			Pago obj = null;
-		
+			
+			JOptionPane.showMessageDialog(null,"Bienvenido");
 		
 			List<String> opciones = new ArrayList<String>();
 			opciones.add("Efectivo");
