@@ -7,8 +7,9 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 /**ALEX ARIEL CHOQUE CLEMENTE*/
+/** Jhoselin te amo mi amor*/
 public class Principal extends Application{
-
+	
 	public void start(Stage arg){
 	
 		try{
