@@ -10,7 +10,9 @@ import javafx.stage.StageStyle;
 public class Principal extends Application{
 
 	public void start(Stage arg){
-	
+		
+		//B
+		
 		try{
 			Pago obj = null;
 		
