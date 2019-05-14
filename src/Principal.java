@@ -41,6 +41,5 @@ public class Principal extends Application{
 		}catch(Exception e){
 			System.exit(1);
 		}
-	
 	}
 }
