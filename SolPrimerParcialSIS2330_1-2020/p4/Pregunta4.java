@@ -8,19 +8,19 @@ public class Pregunta4{
 //	4.	Desarrollar un programa completo para implementar 
 //		la siguiente Jerarquía de Clases: (EN GRAFICO)
 
-	public static void main (String[] args) {
+    public static void main (String[] args) {
     	Deportista objdep = new Deportista();
     	Deportista objfut = new Futbolista();
     	Deportista objbas = new Basquetbolista();
     	Deportista objten = new Tenista();
     
-    	objdep.leer();			//llamada funcion propia de clase padre
+    	objdep.leer();		//llamada funcion propia de clase padre
     	System.out.println ();	//salto linea
-    	objfut.leer(); 			//llamada funcion redefinida en clase hija
+    	objfut.leer(); 		//llamada funcion redefinida en clase hija
     	System.out.println ();	//salto linea
-    	objbas.leer(); 			//llamada funcion redefinida en clase hija
+    	objbas.leer(); 		//llamada funcion redefinida en clase hija
     	System.out.println ();	//salto linea
-    	objten.leer(); 			//llamada funcion redefinida en clase hija
+    	objten.leer(); 		//llamada funcion redefinida en clase hija
     	System.out.println ();	//salto linea
     	
     	System.out.println ("Deportista: ");
