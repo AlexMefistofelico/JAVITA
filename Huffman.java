@@ -3,12 +3,14 @@ import java.io.FileNotFoundException;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.Map;
+import static javax.swing.JOptionPane.*;
 
 /* Huffman codificacion , decodifinacion */
 //Hace dos semanas, en un articulo publicado por La Razon me referia a La otra educacion, a aquella que, a pesar de su importancia, valor social y pertinencia, es ignorada. Hoy retomo el tema, me referire a la "educacion permanente". Posiblemente, a primera impresion, pensara que es la educacion que se desarrolla de manera continua. Desde la estructura del Sistema Educativo de Bolivia, es algo de eso pero es mucho mas...
 
 public class Huffman {
-    static final boolean leerDeArchivo = false;
+	
     static final boolean elNuevoTextoSeBasoEnElViejo = false;
 
     static PriorityQueue<Nodo> nodos = new PriorityQueue<>((o1, o2) -> (o1.valor < o2.valor) ? -1 : 1);
@@ -19,53 +21,49 @@ public class Huffman {
     static int ASCII[] = new int[128];
 
     public static void main(String[] args) throws FileNotFoundException {
-        Scanner scanner = (leerDeArchivo) ? new Scanner(new File("input.txt")) : new Scanner(System.in);
+    	
         int decision = 1;
         while (decision != 0) {
-            if (manejoDecision(scanner, decision)) continue;
-            decision = menuConsola(scanner);
+            if (manejoDecision(decision)) continue;
+            decision = menuConsola();
         }
     }
 
-    private static int menuConsola(Scanner scanner) {
-        int decision;
-        System.out.println("\n---- Menu ----\n" +
+    private static int menuConsola() {
+        
+        String vec[] = {"0] Salir","1] Ingrese Nuevo Texto","2] Codificar Texto","3] Decodificar Texto"};
+        String cad = (String)(showInputDialog(null,"\n---- Menu ----\n" +
                 "-- [0] Salir \n" +
                 "-- [1] Ingrese Nuevo Texto\n" +
                 "-- [2] Codificar Texto\n" +
-                "-- [3] Decodificar Texto");
-        decision = Integer.parseInt(scanner.nextLine());
-        if (leerDeArchivo)
-            System.out.println("Decision: " + decision + "\n---- Fin del Menu ----\n");
-        return decision;
+                "-- [3] Decodificar Texto:\n","Selecciona Opcion",WARNING_MESSAGE,null,vec,vec[2]));
+        if(cad==null)return  0;
+        return (cad.charAt(0)-'0');
     }
 
-    private static boolean manejoDecision(Scanner scanner, int decision) {
+    private static boolean manejoDecision(int decision) {
         
         if (decision == 1){
-            if (manejoNuevoTexto(scanner)) return true;
+            if (manejoNuevoTexto()) return true;
         }else if (decision == 2){
-            if (manejoCodificacionNuevoTexto(scanner)) return true;
+            if (manejoCodificacionNuevoTexto()) return true;
         }else if (decision == 3){
-            manejoDecodificacionNuevoTexto(scanner);
+            manejoDecodificacionNuevoTexto();
         }
         return false;
     }
 
-    private static void manejoDecodificacionNuevoTexto(Scanner scanner) {
-        System.out.print("Ingrese texto a Decodificar: ");
-        codificado = scanner.nextLine();
-        System.out.println("Texto Decodificado: " + codificado);
+    private static void manejoDecodificacionNuevoTexto() {
+        codificado = showInputDialog(null,"Ingrese texto a Decodificar:\n ","Entrada",WARNING_MESSAGE);
+        showMessageDialog(null,"Texto Decodificado:\n " + codificado,"Msg2",WARNING_MESSAGE);
         decodificarTexto();
     }
 
-    private static boolean manejoCodificacionNuevoTexto(Scanner scanner) {
-        System.out.print("Ingrese texto a Codificar: ");
-        texto = scanner.nextLine();
-        System.out.println("texto Codificado: " + texto);
-
+    private static boolean manejoCodificacionNuevoTexto() {
+        texto = showInputDialog(null,"Ingrese texto a Codificar: ","Entrada",WARNING_MESSAGE);
+        showMessageDialog(null,"texto Codificado:\n " + texto,"Msg3",WARNING_MESSAGE);
         if (!esElMismoConjuntoDeCaracteres()) {
-            System.out.println("Entrada no Valida");
+            showMessageDialog(null,"Entrada no Valida","Error",ERROR_MESSAGE);
             texto = "";
             return true;
         }
@@ -73,12 +71,11 @@ public class Huffman {
         return false;
     }
 
-    private static boolean manejoNuevoTexto(Scanner scanner) {
+    private static boolean manejoNuevoTexto() {
         int tamañoTextoAnterior = texto.length();
-        System.out.print("Ingresa Texto: ");
-        texto = scanner.nextLine();
-        if (elNuevoTextoSeBasoEnElViejo && (tamañoTextoAnterior != 0 && !esElMismoConjuntoDeCaracteres())) {
-            System.out.println("Entrada no Valida");
+        texto = showInputDialog(null,"Ingrese Texto: ","Entrada",WARNING_MESSAGE);
+        if (/**/ texto == null || /**/elNuevoTextoSeBasoEnElViejo && (tamañoTextoAnterior != 0 && !esElMismoConjuntoDeCaracteres())) {
+            showMessageDialog(null,"Entrada no Valida","Error",WARNING_MESSAGE);
             texto = "";
             return true;
         }
@@ -87,18 +84,16 @@ public class Huffman {
             codigos.clear();
             codificado = "";
             decodificado = "";
-            System.out.println("Texto: " + texto);
+            showMessageDialog(null,"Texto:\n " + texto,"Reporte",WARNING_MESSAGE);
+            
             calcularIntervalosDeCaracteres(nodos, true);
             construirArbol(nodos);
             generarCodigos(nodos.peek(), "");
 
             mostrarCodigos();
-            System.out.println("-- Codificando/Decodificando --");
-            codificarTexto();
+			showMessageDialog(null,"-- Codificando/Decodificando --","MSg",INFORMATION_MESSAGE);
             decodificarTexto();
             return false;
-
-
 
     }
 
@@ -127,17 +122,20 @@ public class Huffman {
                 if (nodoTemporal.character.length() == 1)
                     decodificado += nodoTemporal.character;
                 else
-                    System.out.println("Entrada no Valida");
-
+                	showMessageDialog(null,"Entrada no Valida","Error",ERROR_MESSAGE);
+                    
         }
-        System.out.println("Decodificar Texto: " + decodificado);
+        showMessageDialog(null,"Decodificar Texto:\n " + decodificado,"MSG",INFORMATION_MESSAGE);
+    
     }
 
     private static void codificarTexto() {
         codificado = "";
         for (int i = 0; i < texto.length(); i++)
             codificado += codigos.get(texto.charAt(i));
-        System.out.println("Texto Codificado: " + codificado);
+        
+        showMessageDialog(null,"Texto Codificado:\n " + codificado,"Codificado",WARNING_MESSAGE);
+
     }
 
     private static void construirArbol(PriorityQueue<Nodo> vector) {
@@ -146,13 +144,21 @@ public class Huffman {
     }
 
     private static void mostrarCodigos() {
-        System.out.println("--- Mostrando Codigos ---");
-        codigos.forEach((k, v) -> System.out.println("'" + k + "' : " + v));//para ejecucion java 8.1 o superior
+        String cad = "";
+        //codigos.forEach((k, v) -> System.out.println ("'" + k + "' : " + v));//para ejecucion java 8.1 o superior
+    	
+    	for (Map.Entry<Character,String> entry : codigos.entrySet())
+    		cad += ("'" + entry.getKey() + "'	=>	" + entry.getValue()+"\n");
+    	
+        showMessageDialog(null,cad,"--- Mostrando Codigos ---",WARNING_MESSAGE);
+
     }
 
     private static void calcularIntervalosDeCaracteres(PriorityQueue<Nodo> vector, boolean imprimeIntervalos) {
-        if (imprimeIntervalos) System.out.println("-- Intervalos --");
-
+       	String tit="";
+        if (imprimeIntervalos) 
+        	tit = "-- Intervalos --";
+		String cad = "";
         for (int i = 0; i < texto.length(); i++)
             ASCII[texto.charAt(i)]++;
 
@@ -161,8 +167,12 @@ public class Huffman {
                 vector.add(new Nodo(ASCII[i] / (texto.length() * 1.0), ((char) i) + ""));
                 if (imprimeIntervalos)
                     //System.out.printl("'" + ((char) i) + "' : " + ASCII[i] / (texto.length() * 1.0));
-                    System.out.printf("'%c' : %.7f\n",((char) i) , ASCII[i] / (texto.length() * 1.0));
+                    cad += String.format("'%c'	=>	%.7f\n",((char) i) , ASCII[i] / (texto.length() * 1.0));
+            		 
             }
+
+        showMessageDialog(null,cad,tit,WARNING_MESSAGE);
+
     }
 
     private static void generarCodigos(Nodo nodo, String s) {
